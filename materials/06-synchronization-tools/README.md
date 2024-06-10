@@ -8,6 +8,36 @@
 - Maintaining data consistency requires mechanisms to ensure the orderly execution of cooperating processes
 - We illustrated in chapter 4 the problem when we considered the Bounded Buffer problem with use of a counter that is updated concurrently by the producer and consumer,. Which lead to race condition.
 
+producer process:
+
+```c
+while (true) {
+    /* produce an item in next produced */
+    while (counter == BUFFER_SIZE)
+        ; /* do nothing */
+
+    buffer[in] = next_produced;
+    in = (in + 1) % BUFFER_SIZE;
+    counter++;
+}
+```
+
+consumer process:
+
+```c
+while (true) {
+    while (counter == 0)
+        ; /* do nothing */
+
+    next_consumed = buffer[out];
+    out = (out + 1) % BUFFER_SIZE;
+    counter--;
+
+    /* consume the item in next consumed */
+}
+```
+
+
 ### Race Condition
 
 - Processes P0 and P1 are creating child processes using the `fork()` system call
@@ -43,20 +73,21 @@ General structure of process $P_i$
 ```c
 while (true) {
     /* Entry section */
-    ...
+        ...
     /* Critical section */
-    ...
+        ...
     /* Exit section */
-    ...
+        ...
     /* Remainder section */
-    ...
+        ...
 }
 ```
+
 
 ### Interrupt-based Solution
 
 - Entry section: disable interrupts
-- Exit section:  enable  interrupts
+- Exit section: enable interrupts
 - Will this solve the problem?
     - What if the critical section is code that runs for an hour?
     - Can some processes starve – never enter their critical section.
@@ -325,6 +356,7 @@ while (true) {
   - The Command:
     `increment(&sequence);` ensures sequence is incremented without interruption:
 - The increment() function can be implemented as follows:
+    
     ```c
     void increment(atomic_int *v)
     {
@@ -468,20 +500,41 @@ remainder section
 
 ## Monitors
 
+All processes share **a semaphore variable mutex**, which is initialized to 1. Each process must execute `wait(mutex)` before entering the critical section and `signal(mutex)` afterward. If this sequence is not observed, two processes may be in their critical sections simultaneously. Next, we examine the various difficulties that may result. Note that these difficulties will arise even if a single process is not well behaved. This situation may be caused by an honest programming error or an uncooperative programmer.
+
+Suppose that a process interchanges the order in which the `wait()` and `signal()` operations on the semaphore mutex are executed, resulting in the following execution:
+
+```c
+signal(mutex);
+    ...
+/* critical section */
+    ...
+wait(mutex);
+```
+
+Deadlock occurs!!!
+```c
+wait(mutex);
+    ...
+/* critical section */
+    ...
+signal(mutex);
+```
+
 - A high-level abstraction that provides a convenient and effective mechanism for process synchronization
 - Abstract data type, internal variables only accessible by code within the procedure
 - Only one process may be active within the monitor at a time
 - Pseudocode syntax of a monitor:
     ```c
-    monitor monitor-name
+    monitor monitor name
     {
         // shared variable declarations
-        procedure P1 (…) { …. }
+        procedure P1 (...) { ... }
 
-        procedure P2 (…) { …. }
-        procedure Pn (…) {……}
+        procedure P2 (...) { ... }
+        procedure Pn (...) { ... }
 
-    initialization code (…) { … }
+    initialization code (...) { ... }
     }
     ```
 

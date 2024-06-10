@@ -2,51 +2,69 @@
 
 ## Bounded-Buffer Problem
 
-- `n` buffers, each can hold one item
-- Semaphore `mutex` initialized to the value 1
-- Semaphore `full` initialized to the value 0
-- Semaphore `empty` initialized to the value n
+To illustrate the power of synchronization primitives.
 
 ```c
-buffer = n;
-mutex = 1;
-full = 0;
-empty = n;
+int n;
+
+buffer = n;             // each can hold one item
+semaphore mutex = 1;
+semaphore empty = n;
+semaphore full = 0;
 ```
+
+> [!NOTE]
+>
+> **[Mutex]:**
+>
+> A mutex is an acronym for mutual exclusion, which is a technique to ensure that **only one thread or process can access a shared resource at a time.** (Type of lock can be acquired or released by a thread or process to control the access to the resource) 
+
+[Mutex]: https://www.linkedin.com/advice/0/what-mutex-operating-system-skills-operating-systems-fzfvf
+
+> [!NOTE]
+> 每個 pool 有一個 item，mutex 對 pool 進行 mutual exclusion，empty 計算空 buffer 數量，full 計算滿 buffer 數量  👉🏻 知道 buffer pool 的狀態。
 
 ### Producer Process
 
 ```c
 while (true) { 
-    ...        /* produce an item in next_produced */ 
-    ... 
-  wait(empty); 
-  wait(mutex); 
-    ...        /* add next produced to the buffer */ 
-    ... 
-  signal(mutex); 
-  signal(full); 
+        ...        
+    /* produce an item in next_produced */ 
+        ... 
+    wait(empty);
+    wait(mutex);
+        ...        
+    /* add next produced to the buffer */ 
+        ... 
+    signal(mutex);
+    signal(full);
 }
 ```
+
 
 ### Consumer Process
 
 ```c
 while (true) { 
-  wait(full); 
-  wait(mutex); 
-  ...      
-  /* remove an item from buffer to next_consumed */ 
-  ... 
-  signal(mutex); 
-  signal(empty); 
-  ...        
-  /* consume the item in next consumed */ 
-  ...     
+    wait(full); 
+    wait(mutex); 
+        ...      
+    /* remove an item from buffer to next_consumed */ 
+        ... 
+    signal(mutex); 
+    signal(empty); 
+        ...
+    /* consume the item in next consumed */ 
+        ...     
 }
 ```
 
+> [!NOTE]
+>
+> The symmetry between the producer and the consumer. We can interpret this code as the producer producing full buffers for the consumer or as the consumer producing empty buffers for the producer.
+
 ## Readers-Writers Problem
+
 
 A data set is shared among a number of concurrent processes, readers only read the data set nad do not perform any updates, writers can both read and write.
 
@@ -54,38 +72,53 @@ Problem: allow multiple readers to read at the same time, but **only one single 
 
 Several variations of how readers and writers are considered - all involve some form of priorities
 
+1. 不會有任何新的 reader 在等待其他的 reader，因為只有遇到 writer 的時候，reader 才會等待。
+2. 當今天有 writer 在等待的時候，不可以有新的 reader 進行 read。
+
+> [!NOTE]
+>
+> Writer 👉🏻 Waiting !!!
+>
+> Reader-Writer Problem: while reading is performed, we can keep reading, but while writing is performed, only one writer can write, and reader also can't read.
+
 Shared Data:
 
 ```c
 data_set = ...;
-rw_mutex = 1;
-mutex = 1;
-read_count = 0;
+
+semaphore rw_mutex = 1;
+semaphore mutex = 1;
+int read_count = 0;
 ```
 
 ### Writer Process
 
 ```c
 while (true) {
-    wait(rw_mutex); 
+    wait(rw_mutex);
         ...
-        /* writing is performed */ 
-        ... 
-    signal(rw_mutex); 
+    /* writing is performed */
+        ...
+    signal(rw_mutex);
 }
 ```
+
+> [!NOTE]
+>
+> `mutex` to ensure the `read_count` is updated. `rw_mutex` as a mutual exclusion semaphore for the writers which only used by the first or last reader that enters or exits the critical section.
+
 
 ### Reader Process
 
 ```c
-while (true){
+while (true) {
     wait(mutex);
 	read_count++;
 	if (read_count == 1) /* first reader */ 
         wait(rw_mutex); 
         signal(mutex); 
         ...
-        /* reading is performed */ 
+    /* reading is performed */ 
         ... 
     wait(mutex);
     read count--;
@@ -94,6 +127,16 @@ while (true){
     signal(mutex); 
 }
 ```
+
+> [!IMPORTANT]
+>
+> When a writer is ready to write, no "newly arrived reader" is allowed to read. Only the first reader will wait on `rw_mutex`, while the others will wait on `mutex`. Also, when the writer executes `signal(rw_mutex)`, it will continue to execute the waiting reader or writer.
+
+> [!NOTE]
+>
+> 1. A process wishes only to read shared data, it requests the reader-writer lock in read mode.
+> 2. A process wishes to modify the shared data must request the lock in write mode.
+> 3. Multiple processes are permitted to concurrently acquire a reader–writer lock in read mode, but only one process may acquire the lock for writing, as exclusive access is required for writers.
 
 > [!NOTE]
 > **Readers-Writers Problem Variations**
@@ -112,35 +155,54 @@ while (true){
   - Need both to eat, then release both when done
 - In the case of 5 philosophers, the shared data 
   - Bowl of rice (data set)
-  - Semaphore `chopstick[5]` initialized to 1
+  - `semaphore chopstick[5]` initialized to 1
 
 ```c
-chopstick[5] = {1, 1, 1, 1, 1};
+semaphore chopstick[5] = {1, 1, 1, 1, 1};
 ```
-
-### Semaphore Solution
 
 ```c
 while (true){ 
     wait (chopstick[i]);
     wait (chopStick[ (i + 1) % 5] );
-
+        ...
     /* eat for awhile */
+        ...
 
     signal (chopstick[i]);
     signal (chopstick[ (i + 1) % 5] );
-
+        ...
     /* think for awhile */
+        ...
 }
 ```
 
 > [!NOTE]
 > What is the problem with this algorithm?
+>
+> 👉🏻 **All five philosophers become hungry at the same time and each grabs her left chopstick**
+> 
+> Although this solution guarantees that no two neighbors are eating simultaneously, it nevertheless must be rejected because it could create a **deadlock**. Suppose that all five philosophers become hungry at the same time and each grabs her left chopstick. All the elements of chopstick will now be equal to `0`. When each philosopher tries to grab her right chopstick, she will be delayed forever.
+
+
+### Monitor Solution
+
+> [!NOTE]
+> 
+> The monitor construct ensures that only **one process at a time** is active within the monitor.
+
+This solution imposes the restriction that a philosopher may pick up her chopsticks **only if both of them are available.** To code this solution, we need to distinguish among three states in which we may find a philosopher. For this purpose, we introduce the following data structure:
+
+```c
+enum {THINKING, HUNGRY, EATING} state[5];
+```
+
+Philosopher `i` can set the variable `state[i] = EATING` only if her two neighborsarenoteating: `(state[(i+4) % 5] != EATING)` and `(state[(i+1) % 5] != EATING)`.
 
 ```c
 monitor DiningPhilosophers { 
     enum {THINKING; HUNGRY, EATING} state [5] ;
-    condition self [5];
+    condition self [5];     // allows philosopher i to delay herself when she is hungry but is unable to obtain the chopsticks she needs.
 
     void pickup (int i) { 
         state[i] = HUNGRY;
@@ -151,7 +213,7 @@ monitor DiningPhilosophers {
 
     void putdown (int i) { 
         state[i] = THINKING;
-            // test left and right neighbors
+        // test left and right neighbors
         test((i + 4) % 5);
         test((i + 1) % 5);
     }
@@ -182,31 +244,148 @@ DiningPhilosophers.pickup(i);
 DiningPhilosophers.putdown(i);
 ```
 
-No deadlock, but starvation is possible
+> [!NTOE]
+> 
+> No deadlock (no two neighbors are eating simultaneously and that no deadlocks will occur.), but starvation is possible !!!
+
+#### Resuming Processes within a Monitor
+
+We turn now to the subject of process-resumption order within a monitor. If several processes are suspended on condition `x`, and an `x.signal()` operation is executed by some process, then how do we determine which of the suspended processes should be resumed next? 
+
+One simple solution is to use a **first-come, first-served (FCFS)** ordering, so that the process that has been waiting the longest is resumed first. In many circumstances, however, such a simple scheduling scheme is not adequate. For this purpose, the conditional-wait construct can be used. This construct has the form
+
+```c
+x.wait(c);  // c is priority number
+```
+
+```c
+R.acquire(t);
+    ...
+access the resource;
+    ...
+R.release();
+```
+
+> [!NOTE]
+> Unfortunately, the monitor concept cannot guarantee that the preceding access sequence will be observed. 
+
+**In particular, the following problems can occur:**
+
+- Aprocess might access a resource without first gaining access permission to the resource.
+
+    ```c
+    monitor ResourceAllocator {
+        boolean busy;
+        condition x;
+
+        void acquire(int itme) {
+            if (busy) {
+                x.wait(item);
+            }
+            busy = true;
+        }
+
+        void release(int item) {
+            busy = false;
+            x.signal(item);
+        }
+
+        initialization_code() {
+            busy = false;
+        }
+    }
+    ```
+
+    > [!NOTE]
+    > Each process, when requesting an allocation of this resource, specifies the maximum time it plans to use the resource. The monitor allocates the resource to the process that has the shortest time-allocation request
+- A process might never release a resource once it has been granted access to the resource.
+- Aprocessmightattempttoreleasearesourcethatitneverrequested.
+- A process might request the same resource twice (without first releasing the resource).
+
+### Semaphore Solution
+
+signaling process must wait until the resumed prossess either leaves or waits 👉🏻 introuduce `next` initialized to 0 which use to suspend themselves, also `next_count` 👉🏻 to count the number of processes suspended on `next`
+
+```c
+wait(mutex);
+        ...
+    body of F
+        ...
+if (next_count > 0)
+    signal(next);
+else
+    signal(mutex);
+```
+
+> [!NOTE]
+>
+> Mutual exclusion within a monitor is ensured.
+
+
+For each condition x, we introduce a semaphore `x_sem` and an integer variable `x_count`, both initialized to 0.
+
+
+#### `x.wait()`
+
+```c
+x_count++;
+if (next_count > 0)
+    signal(next);
+else
+    signal(mutex);
+wait(x_sem);
+x_count--;
+```
+
+#### `x.signal()`
+
+```c
+if (x_count > 0) { 
+    next_count++; 
+    signal(x_sem); 
+    wait(next); 
+    next_count--;
+}
+```
+
+[Exercise 5.30]
+
 
 ## Kernel Synchronization - Windows
+
+> [!TIP]
+> 
+> multithreaded kernel
 
 With interrupt masks, spinlocks, and dispatcher objects (mutexes, semaphores, events, and timers)
 
 > [!NOTE]
-> - Spinlocking-thread will never be preempted
+> - Spinlocking-thread will never be preempted (protect access to global resources)
 > - Event acts much like a condition variable
 > - Timers notify one or more thread when time expired
 > - Dispatcher objects either signaled-state (object available) or non-signaled state (thread will block)
 
-- nonsigned -> signaled (owner thread releases mutex lock) 
-- signaled -> nonsignaled (thread requests mutex lock)
+
+```mermaid
+---
+title: Mutex dispatcher object. (By Hugo)
+---
+flowchart LR
+    A((nonsignaled)) -- owner threads releases mutex lock --> B((signaled)) -- threads acquires mutex lock --> A((nonsignaled))
+```
 
 ## Linux Synchronization
 
+> [!TIP]
+> 
+> nonpreemptive kernel 👉🏻 a task can be preempted when it is running in the kernel
+
 On single-CPU system, spinlocks replaced by enabling and disabling kernel preemption
 
-- Atomic variables: `atomic_t` is the type for atomic integer
-- Consider the variables:
-    - `atomic_t counter;`
-    - `int value;`
-
 ```c
+atomic_t counter;               // atomic integer (performed without interruption)
+int value;
+
 atomic_set(&counter, 5);        // counter = 5
 atomic_add(10, &counter);       // counter += 10
 atomic_sub(4, &counter);        // counter -= 4
@@ -214,6 +393,15 @@ atomic_inc(&counter);           // counter++
 
 value = atomic_read(&counter);  // value = 12
 ```
+
+> [!NOTE]
+>
+> Atomic integers are particularly efficient in situations where an integer variable-—such as a counter—needs to be updated, since atomic operations do not require the overhead of locking mechanisms.
+
+| Single Process | Multiple Process |
+| -------------- | ---------------- |
+| Disable kernel preemption. | Acquire spinlock. |
+| Enable kernel preemption. | Release spinlock. |
 
 ## POSIX Synchronization
 
@@ -508,7 +696,16 @@ public void doWork(int threadNumber) {
 }
 ```
 
-## Transactional Memory
+## Alternative Approaches
+
+> [!NOTE]
+>
+> multithreaded applications present an increased risk of race conditions and deadlocks. 👉🏻 mutex locks, semaphores, and monitors; however, the number of processing cores increases 👉🏻 becomes increasingly difficult to design multithreaded applications that are free from race conditions and deadlocks
+
+
+### Transactional Memory
+
+A memory transaction is a sequence of memory `read–write` operations that are atomic. If all operations in a transaction are completed, the memory transaction is committed. Otherwise, the operations must be **aborted and rolled back**. The benefits of transactional memory can be obtained through features added to a programming language.
 
 
 Consider a function `update()` that must be called atomically. One option is to use mutex locks:
@@ -531,6 +728,10 @@ void update () {
 }
 ```
 
+> [!NOTE]
+>
+> `atomic{S}` 👉🏻 NO Locks, Deadlock is inpossible
+
 ### OpenMP
 
 
@@ -538,17 +739,19 @@ OpenMP is a set of compiler directives and API that support **parallel** progamm
 
 ```c
 void update(int value) {
-    #pragma omp critical
+    #pragma omp critical    // parallel region
     {
         count += value
     }
 }
 ```
 
-The code contained within the `#pragma omp critical` directive is treated as a critical section and performed atomically.
+> [!NOTE]
+> 
+> The code contained within the `#pragma omp critical` directive is treated as a critical section and performed atomically (only one thread may be active at a time).
 
-## Functional Programming Languages
+### Functional Programming Languages
 
-- Functional programming languages offer a **different paradigm than procedural languages** in that they do not maintain state. 
+- Functional programming languages offer a **different paradigm than procedural languages** in that they do ***not maintain state***. 
 - Variables are treated as **immutable** and cannot change state once they have been assigned a value.
 - There is increasing interest in functional languages such as `Erlang` and `Scala` for their approach in handling data races.
