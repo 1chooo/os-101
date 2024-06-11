@@ -47,11 +47,11 @@
 
 ### Virtual-address Space
 
-- Usually design logical address space for stack to start at Max logical address and grow “down” while heap grows “up”
+- Usually design logical address space for stack to start at Max logical address and grow "down" while heap grows "up"
   - Maximizes address space use
   - Unused address space between the two is hole
     - No physical memory needed until heap or stack grows to a given new page
-- Enables sparse address spaces with holes left for growth, dynamically linked libraries, etc.
+- Enables **sparse address spaces** with holes left for growth, dynamically linked libraries, etc.
 - System libraries shared via mapping into virtual address space
 - Shared memory by mapping pages read-write into virtual address space
 - Pages can be shared during `fork()`, speeding process creation
@@ -117,7 +117,7 @@ Page Table When Some Pages Are Not in Main Memory
 1. If there is a reference to a page, first reference to that page will trap to operating system 
     - Page fault
 2. Operating system looks at another table to decide:
-    - Invalid reference  abort
+    - Invalid reference 👉🏻 abort
     - Just not in memory
 3. Find free frame
 4. Swap page into frame via scheduled disk operation
@@ -126,7 +126,11 @@ Page Table When Some Pages Are Not in Main Memory
     Set validation bit = v
 6. Restart the instruction that caused the page fault
 
+
 ![alt text](image-5.png)
+
+> [!TIP]
+> 把 memory reference 到 page table，找不到 👉🏻 page fault 👉🏻 trap 到 OS 👉🏻 OS 就去 Backing Store 去找 Free Frame 如果有得話，就更改 page table 👉🏻 restart
 
 ### Aspects of Demand Paging
 
@@ -155,7 +159,7 @@ Page Table When Some Pages Are Not in Main Memory
 ### Free-Frame List
 
 - When a page fault occurs, the operating system must bring the desired page from secondary storage into main memory. 
-- Most operating systems maintain a  free-frame list -- a pool of free frames for satisfying such requests.
+- Most operating systems maintain a free-frame list -- a pool of free frames for satisfying such requests.
 
     ```mermaid
     graph LR
@@ -166,7 +170,7 @@ Page Table When Some Pages Are Not in Main Memory
         node4[126] --> |...| node5[75]
     ```
 
-- Operating system typically allocate free frames using a technique known as zero-fill-on-demand --  the content of the frames zeroed-out before being allocated.
+- Operating system typically allocate free frames using a technique known as **zero-fill-on-demand** --  the content of the frames zeroed-out before being allocated.
 - When a system starts up, all available memory is placed on the free-frame list. 
 
 ### Stages in Demand Paging – Worse Case
@@ -211,7 +215,7 @@ Page Table When Some Pages Are Not in Main Memory
     $$EAT = (1 – p) \times 200 + p (8 milliseconds)$$
     $$= (1 – p) \times 200 + p \times 8,000,000$$
     $$= 200 + p \times 7,999,800$$
-- If one access out of 1,000 causes a page fault, then
+- If one access out of 1,000 causes a page fault ($p=0.001$), then
     
     $$EAT = 8.2 microseconds.$$
     
@@ -262,8 +266,10 @@ Page Table When Some Pages Are Not in Main Memory
 
 ## Copy-on-Write (COW)
 
-- Copy-on-Write (COW) allows both parent and child processes to initially share the same pages in memory
-  - If either process modifies a shared page, only then is the page copied
+> [!TIP]
+>
+> works by allowing the parent and child processes initially to share the same pages. (If either process modifies a shared page, only then is the page copied)
+
 - COW allows more efficient process creation as only modified pages are copied
 - In general, free pages are allocated from a pool of zero-fill-on-demand pages
   - Pool should always have free frames for fast demand page execution
@@ -274,8 +280,8 @@ Page Table When Some Pages Are Not in Main Memory
   - Very efficient
 
 | Before Process 1 Modifies Page C | After Process 1 Modifies Page C |
-| -- | -- |
-| ![alt text](image-7.png) | ![alt text](image-8.png) |
+| -------------------------------- | ------------------------------- |
+| ![alt text](image-7.png)         | ![alt text](image-8.png)        |
 
 ### What Happens if There is no Free Frame?
 
@@ -330,7 +336,7 @@ Page Table When Some Pages Are Not in Main Memory
 
 ![alt text](image-11.png)
 
-### First-In-First-Out (FIFO) Algorithm
+### [NEED HELP!!!] First-In-First-Out (FIFO) Algorithm
 
 - Reference string: `7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 0, 3, 2, 1, 2, 0, 1, 7, 0, 1`
 - 3 frames (3 pages can be in memory at a time per process)
@@ -346,83 +352,115 @@ Page Table When Some Pages Are Not in Main Memory
 - 3 frames (3 pages can be in memory at a time per process)
 - `7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 0, 3, 2, 1, 2, 0, 1, 7, 0, 1`
 
+[NEED HELP!!!]
 ```
 |    7 0 1 2  . 3 0 4 2 3 0  .  .  .  .  1 2  .  . 7 0 1
-|       7 0 1    2 3 0 4 2 3              0 1       2 7 0
-|          7 0    1 2 3 0 4 2              3 0       1 2 7
+|      7 0 1    2 3 0 4 2 3              0 1       2 7 0
+|        7 0    1 2 3 0 4 2              3 0       1 2 7
 |------------------------------------------------------------
-|             7    0 1 2 3 0 4              2 3       0 1 2        page fault: 15
+|          7    0 1 2 3 0 4              2 3       0 1 2        page fault: 15
 v
 ```
 
 ![FIFO Illustrating Belady's Anomaly](image-13.png)
 
-### Optimal Algorithm
+> [!NOTE]
+>
+> **Belady's Anomaly:**
+> 
+> 即便增加 frames 的數量，page fault 的數量不一定會減少，還有可能會增加
+
+### Optimal (Belady) Algorithm
 
 - Replace page that will not be used for longest period of time
   - 9 is optimal for the example
-- How do you know this?
-  - Can't read the future
 - Used for measuring how well your algorithm performs
 
 ![alt text](image-14.png)
 
+> [!TIP]
+>
+> 取代未來最長時間不會被使用的 page
+
+> [!NOTE]
+>
+> Can't read the future
+
+
 ### Least Recently Used (LRU) Algorithm
 
-- Use past knowledge rather than future
-- Replace page that has not been used in the most amount of time
-- Associate time of last use with each page
+Use past knowledge rather than future 👉🏻 Associate time of last use with each page
 
-    ![alt text](image-15.png)
+![alt text](image-15.png)
+
+> [!TIP]
+>
+> Replace page that has not been used in the most amount of time
 
 - 12 faults – better than FIFO but worse than OPT
 - Generally good algorithm and frequently used
-- But how to implement?
-- Counter implementation
-  - Every page entry has a counter; every time page is referenced through this entry, copy the clock into the counter
-  - When a page needs to be changed, look at the counters to find smallest value
-    - Search through table needed
-- Stack implementation
-  - Keep a stack of page numbers in a double link form:
-  - Page referenced:
-    - move it to the top
-    - requires 6 pointers to be changed
-  - But each update more expensive
-  - No search for replacement
-- LRU and OPT are cases of stack algorithms that don’t have Belady's Anomaly
-- Use Of A Stack to Record Most Recent Page References
 
-    ![alt text](image-16.png)
+#### Implementation
+
+**Counter implementation**
+
+- Every page entry has a counter; every time page is referenced through this entry, copy the clock into the counter
+- When a page needs to be changed, look at the counters to find smallest value
+  - Search through table needed
+
+**Stack implementation**
+
+- Keep a stack of page numbers in a double link form:
+- Page referenced:
+  - move it to the top
+  - requires 6 pointers to be changed
+- But each update more expensive
+- No search for replacement
+
+> [!NOTE]
+> 
+> LRU and OPT are cases of stack algorithms that don’t have Belady's Anomaly
+
+Use Of A Stack to Record Most Recent Page References
+
+![alt text](image-16.png)
 
 ### LRU Approximation Algorithms
 
-- LRU needs special hardware and still slow
-- Reference bit
-  - With each page associate a bit, initially = 0
-  - When page is referenced bit set to 1
-  - Replace any with reference bit = 0 (if one exists)
-    - We do not know the order, however
-- Second-chance algorithm
-  - Generally FIFO, plus hardware-provided reference bit
-  - Clock replacement
-  - If page to be replaced has 
-    - Reference bit = 0 -> replace it
-    - reference bit = 1 then:
-      - set reference bit 0, leave page in memory
-      - replace next page, subject to same rules
+LRU needs special hardware and still slow
 
-### Second-chance Algorithm
+#### Reference bit
+
+- With each page associate a bit, initially = 0
+- When page is referenced bit set to 1
+- Replace any with reference bit = 0 (if one exists)
+  - We do not know the order, however
+
+#### Second-chance algorithm
+
+- Generally FIFO, plus hardware-provided reference bit
+- Clock replacement
+- If page to be replaced has 
+  - Reference bit = 0 -> replace it
+  - reference bit = 1 then:
+    - set reference bit 0, leave page in memory
+    - replace next page, subject to same rules
 
 ![alt text](image-17.png)
 
+> [!TIP]
+>
+> 有 reference bits 我們把 pages 做成 circular 循環，當發現 bit = 1 👉🏻 0，但是遇到 bit = 0 👉🏻 1，當成可以替換掉的 page
+
 ### Enhanced Second-Chance Algorithm
 
-- Improve algorithm by using reference bit and modify bit (if available) in concert
+Improve algorithm by using reference bit and modify bit (if available) in concert
+
 - Take ordered pair (reference, modify):
-  - (0, 0) neither recently used not modified – best page to replace
-  - (0, 1) not recently used but modified – not quite as good, must write out before replacement
-  - (1, 0) recently used but clean – probably will be used again soon
-  - (1, 1) recently used and modified – probably will be used again soon and need to write out before replacement
+  - `(0, 0)` neither recently used not modified – best page to replace
+  - `(0, 1)` not recently used but modified – not quite as good, must write out before replacement
+  - `(1, 0)` recently used but clean – probably will be used again soon
+  - `(1, 1)` recently used and modified – probably will be used again soon and need to write out before replacement
 - When page replacement called for, use the clock scheme  but use the four classes replace page in lowest non-empty class
   - Might need to search circular queue several times
 
@@ -464,10 +502,10 @@ v
 ## Allocation of Frames 
 
 - Each process needs minimum number of frames
-- Example:  IBM 370 – 6 pages to handle SS MOVE instruction:
+- Example: IBM 370 – 6 pages to handle SS MOVE instruction:
   - instruction is 6 bytes, might span 2 pages
-  - 2 pages to handle from
-  - 2 pages to handle to
+  - 2 pages to handle `from`
+  - 2 pages to handle `to`
 - Maximum of course is total frames in the system
 - Two major allocation schemes
   - fixed allocation
@@ -476,13 +514,28 @@ v
 
 ### Fixed Allocation
 
-- Equal allocation – For example, if there are 100 frames (after allocating frames for the OS) and 5 processes, give each process 20 frames
-  - Keep some as free frame buffer pool
-- Proportional allocation – Allocate according to the size of process
-  - Dynamic as degree of multiprogramming, process sizes change
+#### Equal allocation
 
-- $S_i$ = size of process $P_i$, $S = \sum S_i$, $m$ = total number of frames, $a_i$ = allocation for process $p_i = \frac{S_i}{S} \times m$
-- $m = 64$, $S_1 = 10$, $S_2 = 127$, $a_1 = \frac{10}{137} \times 62 \approx 4$, $a_2 = \frac{127}{137} \times 62 \approx 57$
+According the sizes of frames and divided equally among the processes (Maybe keep some as free frame buffer pool)
+
+
+#### Proportional allocation
+
+Allocate according to the size of process
+
+- Dynamic as degree of multiprogramming, process sizes change
+
+#### Example
+- $S_i$ = size of process $P_i$
+- $S = \sum S_i$, $m$ = total number of frames
+- $a_i$ = allocation for process
+- $p_i = \frac{S_i}{S} \times m$
+- $m = 62$
+
+| $S_1$ | $S_2$ | $a_1$ | $a_2$ |
+| ----- | ----- | ----- | ----- |
+| 10    | 127   | $a_1 = \frac{10}{137} \times 62 \approx 4$ | $a_2 = \frac{127}{137} \times 62 \approx 57$ |
+
 
 ### Priority Allocation
 
@@ -494,12 +547,19 @@ v
 
 ### Global vs. Local Allocation
 
-- Global replacement – process selects a replacement frame from the set of all frames; one process can take a frame from another
-  - But then process execution time can vary greatly
-  - But greater throughput so more common
-- Local replacement – each process selects from only its own set of allocated frames
-  - More consistent per-process performance
-  - But possibly underutilized memory
+#### Global replacement
+
+process selects a replacement frame from the set of all frames; one process can take a frame from another
+
+- But then process execution time can vary greatly
+- But greater throughput so more common
+
+#### Local replacement
+
+each process selects from only its own set of allocated frames
+
+- More consistent per-process performance
+- But possibly underutilized memory
 
 ### Reclaiming Pages
 
@@ -519,7 +579,7 @@ v
 
     ![alt text](image-19.png)
 
-- Optimal performance comes from allocating memory “close to” the CPU on which the thread is scheduled
+- Optimal performance comes from allocating memory "close to" the CPU on which the thread is scheduled
   - And modifying the scheduler to schedule the thread on the same system board when possible
   - Solved by Solaris by creating lgroups 
     - Structure to track CPU / Memory low latency groups
@@ -531,14 +591,13 @@ v
 
 ## Thrashing
 
-- If a process does not have "enough" pages, the page-fault rate is very high
-  - Page fault to get page
-  - Replace existing frame
-  - But quickly need replaced frame back
-  - This leads to:
-    - Low CPU utilization
-    - Operating system thinking that it needs to increase the degree of multiprogramming
-    - Another process added to the system
+If a process does not have "enough" pages, the page-fault rate is very high
+
+
+> [!TIP]
+> Page fault rate too high 👉🏻 OS need more page 👉🏻 replace existing frame but quickly need replaced frame back
+>
+> 👉🏻 CPU utilization decrease instantly, also OS thinks it needs to increase the degree of multiprogramming 👉🏻 another process added to system
 
 > [!NOTE]
 >
@@ -625,9 +684,9 @@ v
   - When smaller allocation needed than is available, current chunk split into two buddies of next-lower power of 2
     - Continue until appropriate sized chunk available
 - For example, assume 256KB chunk available, kernel requests 21KB
-  - Split into AL and AR of 128KB each
-    - One further divided into BL and BR of 64KB
-      - One further into CL and CR of 32KB each – one used to satisfy request
+  - Split into $A_L$ and $A_R$ of 128KB each
+    - One further divided into $B_L$ and $B_R$ of 64KB
+      - One further into $C_L$ and $C_R$ of 32KB each – one used to satisfy request
 - Advantage – quickly coalesce unused chunks into larger chunk
 - Disadvantage - fragmentation
 
@@ -639,13 +698,13 @@ v
 
 - Alternate strategy
 - Slab is one or more physically contiguous pages
-- Cache consists of one or more slabs
+- **Cache** consists of one or more slabs
 - Single cache for each unique kernel data structure
-- Each cache filled with objects – instantiations of the data structure
+  - Each cache filled with objects – instantiations of the data structure
 - When cache created, filled with objects marked as free
 - When structures stored, objects marked as used
 - If slab is full of used objects, next object allocated from empty slab
-- If no empty slabs, new slab allocated
+  - If no empty slabs, new slab allocated
 - Benefits include no fragmentation, fast memory request satisfaction
 
 ![alt text](image-26.png)
@@ -792,7 +851,7 @@ rather than paging out modified frames to swap space, we compress several frames
             node2[3] --> node3[35]
             node3[35] --> node4[26]
         ```
-- Assume that this number of free frames falls below a certain threshold that triggers page replacement.  The replacement algorithm (say, an LRU approximation algorithm) selects four frames -- 15, 3, 35, and 26 to place on the free-frame list. It first places these frames on a modified-frame list.  Typically, the modified-frame list would next be written to swap space, making the frames available to the free-frame list.  An alternative strategy is to compress a number of frames{\mdash}say, three{\mdash}and store their compressed versions n a single page frame.
+- Assume that this number of free frames falls below a certain threshold that triggers page replacement.  The replacement algorithm (say, an LRU approximation algorithm) selects four frames -- 15, 3, 35, and 26 to place on the free-frame list. It first places these frames on a modified-frame list.  Typically, the modified-frame list would next be written to swap space, making the frames available to the free-frame list. An alternative strategy is to compress a number of frames{\mdash}say, three{\mdash}and store their compressed versions n a single page frame.
 - An alternative to paging is memory compression. 
 - Rather than paging out modified frames to swap space, we compress several frames into a single frame, enabling the system to reduce memory usage without resorting to swapping pages.
     - free frame list:
