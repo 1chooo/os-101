@@ -9,7 +9,7 @@
 > - Describe how Linux, Windows 10, and Solaris manage virtual memory.
 > - Design a virtual memory manager simulation in the C programming language.
 
-## Table of Contents <!-- omit in toc -->
+## Table of Contents<!-- omit in toc -->
 - [Background](#background)
   - [Virtual memory](#virtual-memory)
   - [Virtual-address Space](#virtual-address-space)
@@ -129,7 +129,7 @@
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -337,7 +337,7 @@ Page Table When Some Pages Are Not in Main Memory
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -372,7 +372,7 @@ Page Table When Some Pages Are Not in Main Memory
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -579,7 +579,7 @@ Improve algorithm by using reference bit and modify bit (if available) in concer
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -673,7 +673,7 @@ each process selects from only its own set of allocated frames
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -757,7 +757,7 @@ If a process does not have "enough" pages, the page-fault rate is very high
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -826,7 +826,7 @@ If a process does not have "enough" pages, the page-fault rate is very high
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -903,7 +903,7 @@ If a process does not have "enough" pages, the page-fault rate is very high
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -934,7 +934,7 @@ If a process does not have "enough" pages, the page-fault rate is very high
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -988,6 +988,6 @@ rather than paging out modified frames to swap space, we compress several frames
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>

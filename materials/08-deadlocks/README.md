@@ -1,6 +1,6 @@
 # Chapter 08 - Deadlocks        <!-- omit in toc -->
 
-## Table of Contents        <!-- omit in toc -->
+## Table of Contents<!-- omit in toc -->
 - [System Model](#system-model)
   - [Deadlock with Semaphores](#deadlock-with-semaphores)
 - [Deadlock Characterization](#deadlock-characterization)
@@ -66,7 +66,7 @@ P2:
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -196,7 +196,7 @@ $$P_1 \rightarrow R_1 \rightarrow P_3 \rightarrow R_2 \rightarrow P_1$$
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -210,7 +210,7 @@ Ensure that the system will never enter a deadlock state by using **deadlock pre
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -606,7 +606,7 @@ Practical Example:
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -709,7 +709,7 @@ When, and how often, to invoke depends on:
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -735,6 +735,6 @@ When, and how often, to invoke depends on:
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>

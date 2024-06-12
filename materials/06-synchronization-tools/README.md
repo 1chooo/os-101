@@ -1,6 +1,6 @@
 # Chapter 06 - Synchronization Tools <!-- omit in toc -->
 
-## Table of Contents    <!-- omit in toc -->
+## Table of Contents<!-- omit in toc -->
 - [Background](#background)
   - [Race Condition](#race-condition)
 - [The Critical-Section Problem](#the-critical-section-problem)
@@ -97,7 +97,7 @@ while (true) {
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -178,7 +178,7 @@ while (true){
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -298,7 +298,7 @@ while (true){
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -433,7 +433,7 @@ while (true) {
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -467,7 +467,7 @@ remainder section
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -571,7 +571,7 @@ remainder section
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -791,7 +791,7 @@ monitor ResourceAllocator
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -822,7 +822,7 @@ monitor ResourceAllocator
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -831,6 +831,6 @@ monitor ResourceAllocator
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>

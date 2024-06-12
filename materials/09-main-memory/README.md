@@ -1,7 +1,7 @@
 # Chapter 09 - Main Memory    <!-- omit in toc -->
 
 
-## Table of Contents   <!-- omit in toc -->
+## Table of Contents<!-- omit in toc -->
 - [Background](#background)
   - [Hardware Address Protection](#hardware-address-protection)
   - [Address Binding](#address-binding)
@@ -228,7 +228,7 @@ With dynamic loading, a routine is not loaded until it is called. All routines a
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -295,7 +295,7 @@ Moving processes between main memory and a backing store. (Total physical memory
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -379,7 +379,7 @@ First-fit and best-fit better than worst-fit in terms of speed and storage utili
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -542,7 +542,7 @@ First-fit and best-fit better than worst-fit in terms of speed and storage utili
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -680,7 +680,7 @@ struct {
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -693,7 +693,7 @@ struct {
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -767,7 +767,7 @@ flowchart-elk LR
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -788,7 +788,7 @@ flowchart-elk LR
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 

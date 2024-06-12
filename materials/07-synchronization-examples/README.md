@@ -1,6 +1,6 @@
 # Chapter 07 - Synchronization Examples     <!-- omit in toc -->
 
-## Table of Contents     <!-- omit in toc -->
+## Table of Contents<!-- omit in toc -->
 - [Bounded-Buffer Problem](#bounded-buffer-problem)
   - [Producer Process](#producer-process)
   - [Consumer Process](#consumer-process)
@@ -103,7 +103,7 @@ while (true) {
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -397,7 +397,7 @@ if (x_count > 0) {
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -426,7 +426,7 @@ flowchart LR
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -461,7 +461,7 @@ value = atomic_read(&counter);  // value = 12
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -561,7 +561,7 @@ pthread_mutex_unlock(&mutex);
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -766,7 +766,7 @@ public void doWork(int threadNumber) {
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
 
@@ -833,6 +833,6 @@ void update(int value) {
 
 <div align="right">
     <p>
-        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
     </p>
 </div>
