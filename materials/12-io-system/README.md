@@ -1,10 +1,49 @@
-# Chapter 12: I/O System
+# Chapter 12: I/O System<!-- omit in toc -->
 
 > [!NOTE]
 > - Explore the structure of an operating system's I/O subsystem
 > - Discuss the principles and complexities of I/O hardware
 > - Explain the performance aspects of I/O hardware and software
 
+## Table of Contents<!-- omit in toc -->
+- [Overview](#overview)
+- [I/O Hardware](#io-hardware)
+  - [A Typical PC Bus Structure](#a-typical-pc-bus-structure)
+  - [Device I/O Port Locations on PCs (partial)](#device-io-port-locations-on-pcs-partial)
+  - [Polling](#polling)
+  - [Interrupts](#interrupts)
+  - [Latency](#latency)
+  - [Intel Pentium Processor Event-Vector Table](#intel-pentium-processor-event-vector-table)
+  - [Direct Memory Access](#direct-memory-access)
+  - [Six Step Process to Perform DMA Transfer](#six-step-process-to-perform-dma-transfer)
+- [Application I/O Interface](#application-io-interface)
+  - [A Kernel I/O Structure](#a-kernel-io-structure)
+  - [Characteristics of I/O Devices](#characteristics-of-io-devices)
+  - [Block and Character Devices](#block-and-character-devices)
+  - [Network Devices](#network-devices)
+  - [Clocks and Timers](#clocks-and-timers)
+  - [Nonblocking and Asynchronous I/O](#nonblocking-and-asynchronous-io)
+  - [Two I/O Methods](#two-io-methods)
+  - [Vectored I/O](#vectored-io)
+- [Kernel I/O Subsystem](#kernel-io-subsystem)
+  - [Device-status Table](#device-status-table)
+  - [Common PC and Data-center I/O devices and Interface Speeds](#common-pc-and-data-center-io-devices-and-interface-speeds)
+  - [Error Handling](#error-handling)
+  - [I/O Protection](#io-protection)
+  - [Use of a System Call to Perform I/O](#use-of-a-system-call-to-perform-io)
+  - [Kernel Data Structures](#kernel-data-structures)
+  - [UNIX I/O Kernel Structure](#unix-io-kernel-structure)
+  - [Power Management](#power-management)
+  - [Kernel I/O Subsystem Summary](#kernel-io-subsystem-summary)
+- [Transforming I/O Requests to Hardware Operations](#transforming-io-requests-to-hardware-operations)
+  - [Life Cycle of An I/O Request](#life-cycle-of-an-io-request)
+- [STREAMS](#streams)
+  - [The STREAMS Structure](#the-streams-structure)
+- [Performance](#performance)
+  - [Intercomputer Communications](#intercomputer-communications)
+  - [Improving Performance](#improving-performance)
+  - [Device-Functionality Progression](#device-functionality-progression)
+  - [I/O Performance of Storage (and Network Latency)](#io-performance-of-storage-and-network-latency)
 
 
 ## Overview
@@ -18,6 +57,12 @@
 - Ports, busses, device controllers connect to various devices
 - Device drivers encapsulate device details
   - Present uniform device-access interface to I/O subsystem
+
+<div align="right">
+    <p>
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 ## I/O Hardware
 
@@ -129,6 +174,12 @@ Interrupt-Driven I/O Cycle
 
 ![alt text](image-5.png)
 
+<div align="right">
+    <p>
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
+
 ## Application I/O Interface
 
 - I/O system calls encapsulate device behaviors in generic classes
@@ -228,6 +279,11 @@ Interrupt-Driven I/O Cycle
   - Some versions provide atomicity
     - Avoid for example worry about multiple threads changing data as reads / writes occurring 
 
+<div align="right">
+    <p>
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 ## Kernel I/O Subsystem
 
@@ -336,7 +392,11 @@ Interrupt-Driven I/O Cycle
 - The upper levels of the I/O subsystem access devices via the uniform interface provided by the device drivers
 
 
-
+<div align="right">
+    <p>
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 ## Transforming I/O Requests to Hardware Operations
 
@@ -351,6 +411,12 @@ Consider reading a file from disk for a process:
 ### Life Cycle of An I/O Request
 
 ![alt text](image-13.png)
+
+<div align="right">
+    <p>
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 ## STREAMS 
 
@@ -367,6 +433,12 @@ Consider reading a file from disk for a process:
 ### The STREAMS Structure
 
 ![alt text](image-14.png)
+
+<div align="right">
+    <p>
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 ## Performance
 
@@ -397,3 +469,10 @@ Consider reading a file from disk for a process:
 ### I/O Performance of Storage (and Network Latency)
 
 ![alt text](image-17.png)
+
+
+<div align="right">
+    <p>
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>

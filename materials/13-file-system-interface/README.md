@@ -1,4 +1,4 @@
-# Chapter 13: File-System Interface
+# Chapter 13: File-System Interface<!-- omit in toc -->
 
 
 > [!NOTE]
@@ -8,7 +8,37 @@
 > - To discuss file-system design tradeoffs, including access methods, file sharing, file locking, and directory structures
 > - To explore file-system protection
 
-
+## Table of Contents<!-- omit in toc -->
+- [File Concept](#file-concept)
+  - [File Attributes](#file-attributes)
+  - [Directory Structure](#directory-structure)
+  - [File Operations](#file-operations)
+  - [Open Files](#open-files)
+  - [File Locking](#file-locking)
+  - [File Locking Example – Java API](#file-locking-example--java-api)
+  - [File Types – Name, Extension](#file-types--name-extension)
+  - [File Structure](#file-structure)
+- [Access Methods](#access-methods)
+  - [Sequential Access](#sequential-access)
+  - [Direct Access](#direct-access)
+    - [Simulation of Sequential Access on Direct-access File](#simulation-of-sequential-access-on-direct-access-file)
+  - [Other Access Methods](#other-access-methods)
+  - [Example of Index and Relative Files](#example-of-index-and-relative-files)
+- [Disk and Directory Structure](#disk-and-directory-structure)
+  - [A Typical File-system Organization](#a-typical-file-system-organization)
+  - [Types of File Systems](#types-of-file-systems)
+  - [Operations Performed on Directory](#operations-performed-on-directory)
+  - [Directory Organization](#directory-organization)
+  - [Single-Level Directory](#single-level-directory)
+  - [Two-Level Directory](#two-level-directory)
+  - [Tree-Structured Directories](#tree-structured-directories)
+  - [Acyclic-Graph Directories](#acyclic-graph-directories)
+  - [General Graph Directory](#general-graph-directory)
+  - [Current Directory](#current-directory)
+- [Protection](#protection)
+  - [Access Lists and Groups in Unix](#access-lists-and-groups-in-unix)
+  - [A Sample UNIX Directory Listing](#a-sample-unix-directory-listing)
+- [Memory-Mapped Files](#memory-mapped-files)
 
 
 
@@ -134,7 +164,11 @@ public class LockingExample {
   - Operating system
   - Program
 
-
+<div align="right">
+    <p>
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 ## Access Methods
 
@@ -186,6 +220,11 @@ public class LockingExample {
 
 ![alt text](image-3.png)
 
+<div align="right">
+    <p>
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 ## Disk and Directory Structure
 
@@ -303,7 +342,11 @@ Have shared subdirectories and files
     - Deleting “mail”  deleting the entire subtree rooted by “mail”
 
         
-
+<div align="right">
+    <p>
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 ## Protection
 
@@ -338,5 +381,17 @@ Have shared subdirectories and files
 
 ![alt text](image-12.png)
 
+<div align="right">
+    <p>
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 ## Memory-Mapped Files
+
+
+<div align="right">
+    <p>
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>

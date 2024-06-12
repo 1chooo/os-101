@@ -1,4 +1,4 @@
-# Chapter 11 - Mass Storage Systems
+# Chapter 11 - Mass Storage Systems<!-- omit in toc -->
 
 > [!NOTE]
 >
@@ -7,6 +7,41 @@
 > - Evaluate I/O scheduling algorithms
 > - Discuss operating-system services provided for mass storage, including RAID
 
+## Table of Contents<!-- omit in toc -->
+- [Overview of Mass Storage Structure](#overview-of-mass-storage-structure)
+  - [Moving-head Disk Mechanism](#moving-head-disk-mechanism)
+  - [Hard Disk Drives](#hard-disk-drives)
+  - [Hard Disk Performance](#hard-disk-performance)
+  - [Nonvolatile Memory Devices](#nonvolatile-memory-devices)
+  - [Nonvolatile Memory Devices](#nonvolatile-memory-devices-1)
+  - [NAND Flash Controller Algorithms](#nand-flash-controller-algorithms)
+  - [Volatile Memory](#volatile-memory)
+  - [Magnetic Tape](#magnetic-tape)
+  - [Disk Structure](#disk-structure)
+  - [Disk Attachment](#disk-attachment)
+  - [Address Mapping](#address-mapping)
+- [HDD Scheduling](#hdd-scheduling)
+  - [FCFS (First-Come, First-Served)](#fcfs-first-come-first-served)
+  - [SSTF (Shortest Seek Time First)](#sstf-shortest-seek-time-first)
+  - [SCAN (Elevator)](#scan-elevator)
+  - [Circular-SCAN](#circular-scan)
+  - [Selecting a Disk-Scheduling Algorithm](#selecting-a-disk-scheduling-algorithm)
+- [NVM Scheduling](#nvm-scheduling)
+- [Error Detection and Correction](#error-detection-and-correction)
+- [Storage Device Management](#storage-device-management)
+- [Swap-Space Management](#swap-space-management)
+- [Storage Attachment](#storage-attachment)
+  - [Network-Attached Storage](#network-attached-storage)
+  - [Cloud Storage](#cloud-storage)
+  - [Storage Array](#storage-array)
+  - [Storage Area Network](#storage-area-network)
+- [RAID Structure](#raid-structure)
+  - [RAID Levels](#raid-levels)
+  - [RAID (0 + 1) mirrored stripes and (1 + 0) Striped mirrors](#raid-0--1-mirrored-stripes-and-1--0-striped-mirrors)
+  - [Other Features](#other-features)
+  - [Extensions](#extensions)
+  - [Traditional and Pooled Storage](#traditional-and-pooled-storage)
+  - [Object Storage](#object-storage)
 
 
 ## Overview of Mass Storage Structure
@@ -133,7 +168,11 @@ NAND block with valid and invalid pages
     - Except for bad sectors
     - Non-constant # of sectors per track via constant angular velocity
 
-
+<div align="right">
+    <p>
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 
 ## HDD Scheduling
@@ -226,6 +265,11 @@ Total movements= (199 – 53) + quick back return + (37 -0) = Quick back to 0 + 
       - If so, LBA queue containing that request is selected for next batch of I/O
 - In RHEL 7 also NOOP and completely fair queueing scheduler (CFQ) also available, defaults vary by storage device
 
+<div align="right">
+    <p>
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 ## NVM Scheduling
 
@@ -236,6 +280,11 @@ Total movements= (199 – 53) + quick back return + (37 -0) = Quick back to 0 + 
   - Input/Output operations per second (IOPS) much higher with NVM (hundreds of thousands vs hundreds)
   - But write amplification (one write, causing garbage collection and many read/writes) can decrease the performance advantage
 
+<div align="right">
+    <p>
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 ## Error Detection and Correction
 
@@ -248,7 +297,11 @@ Total movements= (199 – 53) + quick back return + (37 -0) = Quick back to 0 + 
 - Error-correction code (ECC) not only detects, but can correct some errors
   - Soft errors correctable, hard errors detected but not corrected
 
-
+<div align="right">
+    <p>
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 ## Storage Device Management
 
@@ -280,6 +333,11 @@ Total movements= (199 – 53) + quick back return + (37 -0) = Quick back to 0 + 
 
 Booting from secondary storage in Windows
 
+<div align="right">
+    <p>
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 ## Swap-Space Management
 
@@ -293,7 +351,11 @@ Booting from secondary storage in Windows
 
 ![alt text](image-8.png)
 
-
+<div align="right">
+    <p>
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 ## Storage Attachment
 
@@ -361,6 +423,11 @@ A Storage Array
 
 ![alt text](image-11.png)
 
+<div align="right">
+    <p>
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 ## RAID Structure
 
@@ -435,3 +502,8 @@ ZFS checksums all metadata and data
   - Horizontally scalable
   - Content addressable (根據 object ID 尋找), unstructured
 
+<div align="right">
+    <p>
+        <a href="#table-of-contents" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
