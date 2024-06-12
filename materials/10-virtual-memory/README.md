@@ -1,4 +1,4 @@
-# Chapter 10 - Virtual Memory
+# Chapter 10 - Virtual Memory <!-- omit in toc -->
 
 > [!NOTE]
 >
@@ -9,6 +9,73 @@
 > - Describe how Linux, Windows 10, and Solaris manage virtual memory.
 > - Design a virtual memory manager simulation in the C programming language.
 
+## Table of Contents <!-- omit in toc -->
+- [Background](#background)
+  - [Virtual memory](#virtual-memory)
+  - [Virtual-address Space](#virtual-address-space)
+  - [Shared Library Using Virtual Memory](#shared-library-using-virtual-memory)
+- [Demand Paging](#demand-paging)
+  - [Basic Concepts](#basic-concepts)
+  - [Valid-Invalid Bit](#valid-invalid-bit)
+  - [Steps in Handling Page Fault](#steps-in-handling-page-fault)
+  - [Aspects of Demand Paging](#aspects-of-demand-paging)
+    - [Instruction Restart](#instruction-restart)
+  - [Free-Frame List](#free-frame-list)
+  - [Stages in Demand Paging – Worse Case](#stages-in-demand-paging--worse-case)
+  - [Performance of Demand Paging](#performance-of-demand-paging)
+  - [Demand Paging Example](#demand-paging-example)
+  - [Demand Paging Optimizations](#demand-paging-optimizations)
+  - [Performance of Demand Paging](#performance-of-demand-paging-1)
+- [Copy-on-Write (COW)](#copy-on-write-cow)
+  - [What Happens if There is no Free Frame?](#what-happens-if-there-is-no-free-frame)
+- [Page Replacement](#page-replacement)
+  - [Basic Page Replacement](#basic-page-replacement)
+  - [Page and Frame Replacement Algorithms](#page-and-frame-replacement-algorithms)
+  - [Graph of Page Faults Versus the Number of Frames](#graph-of-page-faults-versus-the-number-of-frames)
+  - [\[NEED HELP!!!\] First-In-First-Out (FIFO) Algorithm](#need-help-first-in-first-out-fifo-algorithm)
+  - [Optimal (Belady) Algorithm](#optimal-belady-algorithm)
+  - [Least Recently Used (LRU) Algorithm](#least-recently-used-lru-algorithm)
+    - [Implementation](#implementation)
+  - [LRU Approximation Algorithms](#lru-approximation-algorithms)
+    - [Reference bit](#reference-bit)
+    - [Second-chance algorithm](#second-chance-algorithm)
+  - [Enhanced Second-Chance Algorithm](#enhanced-second-chance-algorithm)
+  - [Counting Algorithms](#counting-algorithms)
+  - [Page-Buffering Algorithms](#page-buffering-algorithms)
+  - [Applications and Page Replacement](#applications-and-page-replacement)
+- [Allocation of Frames](#allocation-of-frames)
+  - [Fixed Allocation](#fixed-allocation)
+    - [Equal allocation](#equal-allocation)
+    - [Proportional allocation](#proportional-allocation)
+    - [Example](#example)
+  - [Priority Allocation](#priority-allocation)
+  - [Global vs. Local Allocation](#global-vs-local-allocation)
+    - [Global replacement](#global-replacement)
+    - [Local replacement](#local-replacement)
+  - [Reclaiming Pages](#reclaiming-pages)
+  - [Non-Uniform Memory Access](#non-uniform-memory-access)
+- [Thrashing](#thrashing)
+  - [Demand Paging and Thrashing](#demand-paging-and-thrashing)
+  - [Locality In A Memory-Reference Pattern](#locality-in-a-memory-reference-pattern)
+  - [Working-Set Model](#working-set-model)
+  - [Keeping Track of the Working Set](#keeping-track-of-the-working-set)
+  - [Page-Fault Frequency](#page-fault-frequency)
+  - [Working Sets and Page Fault Rates](#working-sets-and-page-fault-rates)
+- [Allocating Kernel Memory](#allocating-kernel-memory)
+  - [Buddy System](#buddy-system)
+    - [Buddy System Allocator](#buddy-system-allocator)
+  - [Slab Allocator](#slab-allocator)
+    - [Slab Allocator in Linux](#slab-allocator-in-linux)
+- [Other Considerations](#other-considerations)
+  - [Prepaging](#prepaging)
+  - [Page Size](#page-size)
+  - [TLB Reach](#tlb-reach)
+  - [Program Structure](#program-structure)
+  - [I/O interlock](#io-interlock)
+- [Operating-System Examples](#operating-system-examples)
+  - [Windows](#windows)
+  - [Solaris](#solaris)
+- [Memory Compression](#memory-compression)
 
 
 ## Background
@@ -60,7 +127,11 @@
 
 ![alt text](image-1.png)
 
-
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 ## Demand Paging
 
@@ -264,6 +335,12 @@ Page Table When Some Pages Are Not in Main Memory
 
 ![alt text](image-29.png)
 
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
+
 ## Copy-on-Write (COW)
 
 > [!TIP]
@@ -293,7 +370,11 @@ Page Table When Some Pages Are Not in Main Memory
   - Performance – want an algorithm which will result in minimum number of page faults
 - Same page may be brought into memory several times
 
-
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 ## Page Replacement
 
@@ -496,7 +577,11 @@ Improve algorithm by using reference bit and modify bit (if available) in concer
   - Raw disk mode
 - Bypasses buffering, locking, etc.
 
-
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 
 ## Allocation of Frames 
@@ -586,7 +671,11 @@ each process selects from only its own set of allocated frames
     - Used my schedule and pager
     - When possible schedule all threads of a process and allocate all memory for that process within the lgroup
 
-
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 
 ## Thrashing
@@ -666,6 +755,12 @@ If a process does not have "enough" pages, the page-fault rate is very high
 
 ![alt text](image-24.png)
 
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
+
 ## Allocating Kernel Memory
 
 - Treated differently from user memory
@@ -729,7 +824,11 @@ If a process does not have "enough" pages, the page-fault rate is very high
     - Simple List of Blocks – maintains 3 list objects for small, medium, large objects
   - SLUB is performance-optimized SLAB removes per-CPU queues, metadata stored in page structure
 
-
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 ## Other Considerations
 
@@ -802,6 +901,12 @@ If a process does not have "enough" pages, the page-fault rate is very high
 
 ![alt text](image-27.png)
 
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
+
 ## Operating-System Examples
 
 ### Windows
@@ -827,6 +932,11 @@ If a process does not have "enough" pages, the page-fault rate is very high
 
 ![Solaris 2 Page Scanner](image-28.png)
 
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 ## Memory Compression
 
@@ -876,3 +986,8 @@ rather than paging out modified frames to swap space, we compress several frames
             head --> node1[7]
         ```
 
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>

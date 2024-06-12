@@ -1,4 +1,42 @@
-# Chapter 07 - Synchronization Examples
+# Chapter 07 - Synchronization Examples     <!-- omit in toc -->
+
+## Table of Contents     <!-- omit in toc -->
+- [Bounded-Buffer Problem](#bounded-buffer-problem)
+  - [Producer Process](#producer-process)
+  - [Consumer Process](#consumer-process)
+- [Readers-Writers Problem](#readers-writers-problem)
+  - [Writer Process](#writer-process)
+  - [Reader Process](#reader-process)
+- [Dining-Philosophers Problem](#dining-philosophers-problem)
+  - [Monitor Solution](#monitor-solution)
+    - [Resuming Processes within a Monitor](#resuming-processes-within-a-monitor)
+  - [Semaphore Solution](#semaphore-solution)
+    - [`x.wait()`](#xwait)
+    - [`x.signal()`](#xsignal)
+- [Kernel Synchronization - Windows](#kernel-synchronization---windows)
+- [Linux Synchronization](#linux-synchronization)
+- [POSIX Synchronization](#posix-synchronization)
+  - [POSIX Mutex Locks](#posix-mutex-locks)
+    - [Creating and initializing the lock](#creating-and-initializing-the-lock)
+    - [Acquiring and releasing the lock](#acquiring-and-releasing-the-lock)
+  - [POSIX Semaphores](#posix-semaphores)
+    - [Creating an initializing the semaphore](#creating-an-initializing-the-semaphore)
+    - [Acquiring and releasing the semaphore](#acquiring-and-releasing-the-semaphore)
+  - [POSIX Condition Variables](#posix-condition-variables)
+    - [Creating and initializing the condition variable](#creating-and-initializing-the-condition-variable)
+    - [Thread waiting for the condition `a == b` to become true](#thread-waiting-for-the-condition-a--b-to-become-true)
+    - [Thread signaling another thread waiting on the condition variable](#thread-signaling-another-thread-waiting-on-the-condition-variable)
+- [Java Synchronization](#java-synchronization)
+  - [Java Monitors](#java-monitors)
+  - [Reentrant locks](#reentrant-locks)
+  - [Semaphores](#semaphores)
+  - [Condition variables](#condition-variables)
+    - [Example](#example)
+- [Alternative Approaches](#alternative-approaches)
+  - [Transactional Memory](#transactional-memory)
+  - [OpenMP](#openmp)
+  - [Functional Programming Languages](#functional-programming-languages)
+
 
 ## Bounded-Buffer Problem
 
@@ -62,6 +100,12 @@ while (true) {
 > [!NOTE]
 >
 > The symmetry between the producer and the consumer. We can interpret this code as the producer producing full buffers for the consumer or as the consumer producing empty buffers for the producer.
+
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 ## Readers-Writers Problem
 
@@ -351,6 +395,12 @@ if (x_count > 0) {
 [Exercise 5.30]
 
 
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
+
 ## Kernel Synchronization - Windows
 
 > [!TIP]
@@ -373,6 +423,12 @@ title: Mutex dispatcher object. (By Hugo)
 flowchart LR
     A((nonsignaled)) -- owner threads releases mutex lock --> B((signaled)) -- threads acquires mutex lock --> A((nonsignaled))
 ```
+
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 ## Linux Synchronization
 
@@ -402,6 +458,12 @@ value = atomic_read(&counter);  // value = 12
 | -------------- | ---------------- |
 | Disable kernel preemption. | Acquire spinlock. |
 | Enable kernel preemption. | Release spinlock. |
+
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 ## POSIX Synchronization
 
@@ -496,6 +558,12 @@ a = b;
 pthread_cond_signal(&cond_var);
 pthread_mutex_unlock(&mutex);
 ```
+
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 ## Java Synchronization
 
@@ -696,6 +764,12 @@ public void doWork(int threadNumber) {
 }
 ```
 
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
+
 ## Alternative Approaches
 
 > [!NOTE]
@@ -755,3 +829,10 @@ void update(int value) {
 - Functional programming languages offer a **different paradigm than procedural languages** in that they do ***not maintain state***. 
 - Variables are treated as **immutable** and cannot change state once they have been assigned a value.
 - There is increasing interest in functional languages such as `Erlang` and `Scala` for their approach in handling data races.
+
+
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>

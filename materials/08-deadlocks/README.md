@@ -1,4 +1,39 @@
-# Chapter 08 - Deadlocks
+# Chapter 08 - Deadlocks        <!-- omit in toc -->
+
+## Table of Contents        <!-- omit in toc -->
+- [System Model](#system-model)
+  - [Deadlock with Semaphores](#deadlock-with-semaphores)
+- [Deadlock Characterization](#deadlock-characterization)
+  - [DEADLOCK WITH MUTEX LOCKS](#deadlock-with-mutex-locks)
+  - [Deadlock Conditions](#deadlock-conditions)
+  - [Resource Allocation Graph](#resource-allocation-graph)
+  - [Resource Allocation Graph Example](#resource-allocation-graph-example)
+- [Methods for Handling Deadlocks](#methods-for-handling-deadlocks)
+- [Deadlock Prevention](#deadlock-prevention)
+  - [Mutual Exclusion](#mutual-exclusion)
+  - [Hold and Wait](#hold-and-wait)
+  - [No Preemption](#no-preemption)
+  - [Circular Wait](#circular-wait)
+- [Deadlock Avoidance](#deadlock-avoidance)
+  - [Safe State](#safe-state)
+  - [Resource-Allocation Graph Algorithms(Single Instance of a Resource Type)](#resource-allocation-graph-algorithmssingle-instance-of-a-resource-type)
+  - [Banker's Algorithm (Multiple Instances of a Resource Type)](#bankers-algorithm-multiple-instances-of-a-resource-type)
+    - [Data Structures](#data-structures)
+    - [Safety Algorithm](#safety-algorithm)
+    - [Resource-Request Algorithm](#resource-request-algorithm)
+    - [Example](#example)
+    - [Another Example $P\_1$ Request $(1, 0, 2)$](#another-example-p_1-request-1-0-2)
+- [Deadlock Detection](#deadlock-detection)
+  - [Single Instance of Each Resource Type](#single-instance-of-each-resource-type)
+  - [Several Instances of a Resource Type](#several-instances-of-a-resource-type)
+  - [Detection Algorithm](#detection-algorithm)
+    - [Example](#example-1)
+    - [Another Example $P\_2$ requests an additional instance of type C](#another-example-p_2-requests-an-additional-instance-of-type-c)
+  - [Detection-Algorithm Usage](#detection-algorithm-usage)
+- [Recovery from Deadlock](#recovery-from-deadlock)
+  - [Process Termination](#process-termination)
+  - [Resource Preemption](#resource-preemption)
+
 
 
 ## System Model
@@ -28,6 +63,12 @@ P2:
     wait(s2)
     wait(s1)
 ```
+
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 ## Deadlock Characterization
 
@@ -93,7 +134,7 @@ Deadlock can arise if four conditions hold **simultaneously**.
 - **Mutual exclusion:** only one process at a time can use a resource 👉🏻 If another process requests that resource, it MUST be delayed until the resource is released.
 - **Hold and wait:** a process holding at least one resource is waiting to acquire additional resources held by other processes
 - **No preemption:** a resource can be released only **voluntarily** by the process holding it, after that process has completed its task
-- Circular wait:  there exists a set {$P_0, P_1, . . . , P_n$} of waiting processes such that $P_0$ is waiting for a resource that is held by $P_1$, $P_1$ is waiting for a resource that is held by $P_2, . . . , P_{n-1}$ is waiting for a resource that is held by $P_n$, and $P_n$ is waiting for a resource that is held by $P_0$.
+- **Circular wait:**  there exists a set $\{P_0, P_1, . . . , P_n\}$ of waiting processes such that $P_0$ is waiting for a resource that is held by $P_1$, $P_1$ is waiting for a resource that is held by $P_2, . . . , P_{n-1}$ is waiting for a resource that is held by $P_n$, and $P_n$ is waiting for a resource that is held by $P_0$.
 
 > [!NOTE]
 >
@@ -153,6 +194,12 @@ $$P_1 \rightarrow R_1 \rightarrow P_3 \rightarrow R_2 \rightarrow P_1$$
 >    - if only one instance per resource type, then deadlock
 >    - if several instances per resource type, possibility of deadlock
 
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
+
 ## Methods for Handling Deadlocks
 
 1. We can use a protocol to prevent or avoid deadlocks, ensuring that the system will never enter a deadlocked state.
@@ -160,6 +207,12 @@ $$P_1 \rightarrow R_1 \rightarrow P_3 \rightarrow R_2 \rightarrow P_1$$
 3. We can ignore the problem altogether and pretend that deadlocks never occur in the system.
 
 Ensure that the system will never enter a deadlock state by using **deadlock prevention or avoidance techniques**, or allow the system to enter a state and then recover, or ignore the problem and pretend that deadlocks never occur in the system.
+
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 ## Deadlock Prevention
 
@@ -551,6 +604,12 @@ Practical Example:
 2. Can request for (0,2,0) by $P_0$ be granted? $(0,2,0) \leq (3,3,2) \Rightarrow true$
     - `| P0 | 0 3 0 | 7 2 3 | 3,1,2 | < P3, P1, P2 >10,2,5 fail |`
 
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
+
 ## Deadlock Detection
 
 ### Single Instance of Each Resource Type
@@ -648,6 +707,12 @@ When, and how often, to invoke depends on:
 > 
 > If detection algorithm is invoked arbitrarily, there may be **many cycles** in the resource graph and so we would not be able to tell which of the many deadlocked processes "caused" the deadlock.
 
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
+
 ## Recovery from Deadlock
 
 ### Process Termination
@@ -667,3 +732,9 @@ When, and how often, to invoke depends on:
 - **Selecting a victim** – minimize cost
 - **Rollback** – return to some safe state, restart process for that state
 - **Starvation** – same process may always be picked as victim, include number of rollback in cost factor
+
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>

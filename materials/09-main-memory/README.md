@@ -1,4 +1,53 @@
-# Chapter 09 - Main Memory
+# Chapter 09 - Main Memory    <!-- omit in toc -->
+
+
+## Table of Contents   <!-- omit in toc -->
+- [Background](#background)
+  - [Hardware Address Protection](#hardware-address-protection)
+  - [Address Binding](#address-binding)
+  - [Binding of Instructions and Data to Memory](#binding-of-instructions-and-data-to-memory)
+  - [Logical vs. Physical Address Space](#logical-vs-physical-address-space)
+  - [Memory-Management Unit (MMU)](#memory-management-unit-mmu)
+  - [Dynamic Loading](#dynamic-loading)
+- [Swapping](#swapping)
+  - [Schematic View of Swapping](#schematic-view-of-swapping)
+  - [Context Switch Time including Swapping](#context-switch-time-including-swapping)
+  - [Swapping on Mobile Systems](#swapping-on-mobile-systems)
+  - [Swapping with Paging](#swapping-with-paging)
+- [Contiguous Memory Allocation](#contiguous-memory-allocation)
+  - [Variable Partition](#variable-partition)
+  - [Dynamic Storage-Allocation Problem](#dynamic-storage-allocation-problem)
+  - [Fragmentation](#fragmentation)
+- [Paging](#paging)
+  - [Address Translation Scheme](#address-translation-scheme)
+  - [Hardware](#hardware)
+  - [Example](#example)
+  - [Paging -- Calculating internal fragmentation](#paging----calculating-internal-fragmentation)
+  - [Free Frames (Before and After)](#free-frames-before-and-after)
+  - [Implementation of Page Table](#implementation-of-page-table)
+  - [Translation Look-Aside Buffer (TLB)](#translation-look-aside-buffer-tlb)
+  - [Hardware](#hardware-1)
+  - [Effective Access Time](#effective-access-time)
+  - [Memory Protection](#memory-protection)
+  - [Valid (v) or Invalid (i) Bit In A Page Table](#valid-v-or-invalid-i-bit-in-a-page-table)
+  - [Shared Pages](#shared-pages)
+- [Structure of the Page Table](#structure-of-the-page-table)
+  - [Hierarchical Page Tables](#hierarchical-page-tables)
+    - [Two-Level Paging Example](#two-level-paging-example)
+    - [Address-Translation Scheme](#address-translation-scheme-1)
+    - [64-bit Logical Address Space](#64-bit-logical-address-space)
+    - [Three-level Paging Scheme](#three-level-paging-scheme)
+  - [Hashed Page Tables](#hashed-page-tables)
+  - [Inverted Page Table](#inverted-page-table)
+  - [Oracle SPARC Solaris](#oracle-sparc-solaris)
+- [Example: The Intel 32 and 64-bit Architectures](#example-the-intel-32-and-64-bit-architectures)
+- [Example: The Intel IA-32 Architecture](#example-the-intel-ia-32-architecture)
+  - [Logical to Physical Address Translation in IA-32](#logical-to-physical-address-translation-in-ia-32)
+  - [Intel IA-32 Segmentation](#intel-ia-32-segmentation)
+  - [Intel IA-32 Paging Architecture](#intel-ia-32-paging-architecture)
+  - [Intel IA-32 Page Address Extensions](#intel-ia-32-page-address-extensions)
+  - [Intel x86-64](#intel-x86-64)
+- [Example: ARMv8 Architecture](#example-armv8-architecture)
 
 
 
@@ -177,6 +226,12 @@ With dynamic loading, a routine is not loaded until it is called. All routines a
 - System also known as **shared libraries**
 - Consider applicability to patching system libraries (Versioning may be needed)
 
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
+
 ## Swapping
 
 Moving processes between main memory and a backing store. (Total physical memory space of processes can exceed physical memory)
@@ -237,6 +292,12 @@ Moving processes between main memory and a backing store. (Total physical memory
 ### Swapping with Paging
 
 ![alt text](image-20.png)
+
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 ## Contiguous Memory Allocation
 
@@ -315,6 +376,12 @@ First-fit and best-fit better than worst-fit in terms of speed and storage utili
 
 > [!NOTE]
 > compaction. The goal is to shuffle the memory contents so as to place all free memory together in one large block. Compaction is not always possible, however. If relocation is static and is done at assembly or load time, compaction cannot be done.
+
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 ## Paging
 
@@ -473,6 +540,12 @@ First-fit and best-fit better than worst-fit in terms of speed and storage utili
 
 ![alt text](image-10.png)
 
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
+
 ## Structure of the Page Table
 
 Memory structures for paging can get huge using straight-forward methods
@@ -605,6 +678,11 @@ struct {
     - If no match found, kernel interrupted to search the hash table
       - The kernel then creates a TTE from the appropriate hash table and stores it in the TSB, Interrupt handler returns control to the MMU, which completes the address translation. 
 
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 ## Example: The Intel 32 and 64-bit Architectures
 
@@ -612,6 +690,12 @@ struct {
 - Pentium CPUs are 32-bit and called IA-32 architecture
 - Current Intel CPUs are 64-bit and called IA-64 architecture
 - Many variations in the chips, cover the main ideas here
+
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 ## Example: The Intel IA-32 Architecture
 
@@ -681,6 +765,12 @@ flowchart-elk LR
 
 ![alt text](image-27.png)
 
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
+
 ## Example: ARMv8 Architecture
 
 - Dominant mobile platform chip (Apple iOS and Google Android devices for example)
@@ -696,7 +786,11 @@ flowchart-elk LR
 ![alt text](image-28.png)
 
 
-
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 
 

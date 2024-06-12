@@ -1,4 +1,53 @@
-# Chapter 06 - Synchronization Tools
+# Chapter 06 - Synchronization Tools <!-- omit in toc -->
+
+## Table of Contents    <!-- omit in toc -->
+- [Background](#background)
+  - [Race Condition](#race-condition)
+- [The Critical-Section Problem](#the-critical-section-problem)
+  - [Critical Section](#critical-section)
+  - [Interrupt-based Solution](#interrupt-based-solution)
+    - [Software Solution 1](#software-solution-1)
+    - [Algorithm for Process Pi](#algorithm-for-process-pi)
+    - [Correctness of the Software Solution](#correctness-of-the-software-solution)
+- [Peterson’s Solution](#petersons-solution)
+  - [Algorithm for Process Pi](#algorithm-for-process-pi-1)
+  - [Correctness of Peterson’s Solution](#correctness-of-petersons-solution)
+  - [Peterson’s Solution and Modern Architecture](#petersons-solution-and-modern-architecture)
+    - [Modern Architecture Example](#modern-architecture-example)
+  - [Peterson’s Solution Revisited](#petersons-solution-revisited)
+  - [Memory Barrier](#memory-barrier)
+  - [Memory Barrier Instructions](#memory-barrier-instructions)
+    - [Memory Barrier Example](#memory-barrier-example)
+- [Hardware Support for Synchronization](#hardware-support-for-synchronization)
+  - [Hardware Instructions](#hardware-instructions)
+  - [The test\_and\_set  Instruction](#the-test_and_set--instruction)
+  - [Solution Using test\_and\_set()](#solution-using-test_and_set)
+  - [The compare\_and\_swap  Instruction](#the-compare_and_swap--instruction)
+  - [Solution using compare\_and\_swap](#solution-using-compare_and_swap)
+  - [Bounded-waiting with compare-and-swap](#bounded-waiting-with-compare-and-swap)
+  - [Atomic Variables](#atomic-variables)
+- [Mutex Locks](#mutex-locks)
+  - [Solution to CS Problem Using Mutex Locks](#solution-to-cs-problem-using-mutex-locks)
+- [Semaphores](#semaphores)
+    - [Semaphore Usage Example](#semaphore-usage-example)
+  - [Semaphore Implementation](#semaphore-implementation)
+  - [Semaphore Implementation with no Busy waiting](#semaphore-implementation-with-no-busy-waiting)
+  - [Problems with Semaphores](#problems-with-semaphores)
+- [Monitors](#monitors)
+  - [Schematic view of a Monitor](#schematic-view-of-a-monitor)
+  - [Monitor Implementation Using Semaphores](#monitor-implementation-using-semaphores)
+  - [Condition Variables](#condition-variables)
+  - [Monitor with Condition Variables](#monitor-with-condition-variables)
+  - [Usage of Condition Variable  Example](#usage-of-condition-variable--example)
+  - [Monitor Implementation Using Semaphores](#monitor-implementation-using-semaphores-1)
+  - [Implementation – Condition Variables](#implementation--condition-variables)
+  - [Resuming Processes within a Monitor](#resuming-processes-within-a-monitor)
+  - [Single Resource allocation](#single-resource-allocation)
+  - [Single Resource allocation](#single-resource-allocation-1)
+  - [A Monitor to Allocate Single Resource](#a-monitor-to-allocate-single-resource)
+  - [Single Resource Monitor (Cont.)](#single-resource-monitor-cont)
+- [Liveness](#liveness)
+- [Evaluation](#evaluation)
 
 ## Background
 
@@ -46,7 +95,11 @@ while (true) {
 - Unless there is a mechanism to prevent P0 and P1 from accessing  the variable `next_available_pid`  the same pid could be assigned to two different processes!
 
 
-
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 ## The Critical-Section Problem
 
@@ -122,6 +175,12 @@ while (true){
         turn = i and turn cannot be both 0 and 1 at the same time
 - What about the Progress requirement?
 - What about the Bounded-waiting requirement?
+
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 ## Peterson’s Solution
 
@@ -237,7 +296,11 @@ while (true){
 - For Thread 1 we are guaranteed that  that the value of flag is loaded before the value of `x`.
 - For Thread 2 we ensure that the assignment to x occurs before the assignment `flag`.
 
-
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 
 ## Hardware Support for Synchronization
@@ -368,6 +431,11 @@ while (true) {
     } 
     ```
 
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 ## Mutex Locks
 
@@ -376,9 +444,9 @@ while (true) {
 - Simplest is mutex lock
   - Boolean variable indicating if lock is available or not
 - Protect a critical section  by 
-  - First acquire() a lock 
-  - Then release() the lock
-- Calls to acquire() and release() must be atomic
+  - First `acquire()` a lock 
+  - Then `release()` the lock
+- Calls to `acquire()` and `release()` must be atomic
   - Usually implemented via hardware atomic instructions such as compare-and-swap.
 - But this solution requires busy waiting
   - This lock therefore called a spinlock
@@ -397,6 +465,11 @@ remainder section
 } 
 ```
 
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 ## Semaphores
 
@@ -496,7 +569,11 @@ remainder section
   - Omitting  of wait (mutex) and/or signal (mutex)
 - These – and others – are examples of what can occur when semaphores and other synchronization tools are used incorrectly.
 
-
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 ## Monitors
 
@@ -712,6 +789,12 @@ monitor ResourceAllocator
     -  Omitting  of acquire() and/or release()
 
 
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
+
 ## Liveness
 
 - Processes may have to wait indefinitely while trying to acquire a synchronization tool such as a mutex lock or semaphore.
@@ -737,7 +820,17 @@ monitor ResourceAllocator
 - Priority Inversion – Scheduling problem when lower-priority process holds a lock needed by higher-priority process
   - Solved via priority-inheritance protocol
 
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
 
 
 ## Evaluation
 
+<div align="right">
+    <p>
+        <a href="#table-of-contents-------" target="_blank"><b>☝🏼 [Back to TOP]</b></a> 
+    </p>
+</div>
